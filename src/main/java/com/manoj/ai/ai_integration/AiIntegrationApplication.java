@@ -6,10 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AiIntegrationApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(AiIntegrationApplication.class, args);
-		System.out.println("manoj started");
-	}
+        SpringApplication.run(AiIntegrationApplication.class, args);
+    }
 
 }

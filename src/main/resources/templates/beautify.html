@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Content Beautification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .explanation {
+            margin-bottom: 20px;
+        }
+        .bold {
+            font-weight: bold;
+            color: #333; /* Optional: Adjust color as needed */
+        }
+
+    </style>
+</head>
+<body>
+<div id="content" class="explanation">
+    <!-- Dynamic content will be inserted here -->
+    <!-- Use Thymeleaf syntax to access model attribute -->
+    <!--    <span th:text="${rawText}"></span>-->
+    <pre th:text="${rawText}"></pre>
+</div>
+
+<script>
+        function beautifyContent(content) {
+            var beautifiedContent = content.replace(/\*(.*?)\*/g, '<pre class="bold">$1</pre>');
+            return beautifiedContent;
+        }
+
+        var container = document.getElementById('content');
+
+        <!--Get the rawType content from the server-side rendered HTML-->
+        var rawTextContent = container.innerHTML;
+
+        <!--Beautify and set the dynamic content-->
+        container.innerHTML = beautifyContent(rawTextContent);
+
+</script>
+</body>
+</html>

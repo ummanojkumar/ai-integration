@@ -4,13 +4,14 @@ import com.manoj.ai.ai_integration.mapper.AiMapper;
 import com.manoj.ai.ai_integration.service.AiService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController
+@Controller
 @AllArgsConstructor
 public class AiController {
 
@@ -18,12 +19,14 @@ public class AiController {
     AiMapper aiMapper;
 
     @GetMapping("/manojgpt/{query}")
-    private ResponseEntity<String> generateQueryResponse(@PathVariable("query") String query) {
+    private String generateQueryResponse(@PathVariable("query") String query, Model model) {
 
-        return Optional.ofNullable(query)
+        ResponseEntity<String> rawText = Optional.ofNullable(query)
                 .map(aiMapper::mapToRequest)
                 .map(aiService::generateQueryResponse)
                 .map(aiMapper::mapToResponse)
                 .orElse(null);
+        model.addAttribute("rawText", rawText.getBody());
+        return "beautify";
     }
 }
